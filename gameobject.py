@@ -3,6 +3,8 @@ from pygame.math import Vector2
 
 
 class GameObject:
+    UP_DIRECTION = Vector2(0, -1)  # unit vectors
+
     def __init__(self, position, sprite, velocity):
         self.position = Vector2(position)
         self.sprite = sprite
