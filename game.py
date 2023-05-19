@@ -4,6 +4,7 @@ from player import Player
 from asteroids import Asteroids
 import utils
 import random
+import time
 
 class Game:
     # class const
@@ -52,7 +53,9 @@ class Game:
 
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
-        self.asteroids_list[1].move(self.screen)
+
+        for asteroids in self.asteroids_list:
+            asteroids.move(self.screen)
 
         # # Check screen boundaries to keep object within screen
         # if self.spaceship.position.x < 0 or self.spaceship.position.x > self.screen.get_width():
@@ -63,7 +66,12 @@ class Game:
     def _draw(self):
         self.screen.blit(self.background, (0, 0))  # fills the screen with each frame
         self.spaceship.draw(self.screen)
-        self.asteroids_list[1].draw(self.screen)
+
+        # asteroid drawing
+        for asteroids in self.asteroids_list:
+            asteroids.draw(self.screen)
+            asteroids.rotate()
+
         pygame.display.flip()  # updates the content of the screen
         self.clock.tick(60)  # will wait it match the desired FPS
 
