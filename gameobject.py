@@ -1,4 +1,4 @@
-import utils
+from utils import *
 from pygame.math import Vector2
 
 
@@ -12,11 +12,11 @@ class GameObject:
         self.velocity = Vector2(velocity)
 
     def draw(self, surface):
-        blit_position = self.position - Vector2(self.radius)
+        blit_position = self.position - Vector2(self.radius)  # blit requires top-left corner
         surface.blit(self.sprite, blit_position)
 
-    def move(self):
-        self.position = self.position + self.velocity
+    def move(self, surface):
+        self.position = wrap_position(self.position + self.velocity, surface)
 
     def collides_with(self, other_obj):
         distance = self.position.distance_to(other_obj.position)
