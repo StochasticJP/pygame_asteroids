@@ -4,6 +4,7 @@ from pygame.mixer import Sound
 from pygame import Color
 import random
 
+
 def load_sprite(name, with_alpha=True):
     path = f"assets/sprites/{name}.png"
     loaded_sprite = load(path)
@@ -30,7 +31,6 @@ def get_random_position(surface):
         random.randrange(surface.get_width()),
         random.randrange(surface.get_height())
     )
-
 
 
 def get_random_velocity(min_speed, max_speed):

@@ -4,12 +4,10 @@ from pygame.math import Vector2
 from pygame.transform import rotozoom
 import random
 
+
 class Asteroids(GameObject):
     ASTEROIDS = "asteroid"
     CONST_ROTATION = 1
-    INIT_SPEED = 1
-    DIRECTION_NUMBER = 5
-    UP_COORDS = (0, -1)
 
     def __init__(self, position, create_asteroid_callback, size=3):
         self.size = size
@@ -20,12 +18,10 @@ class Asteroids(GameObject):
             2: 0.5,
             1: 0.25,
         }
-
         scale = size_to_scale[size]
         sprite = rotozoom(load_sprite(self.ASTEROIDS), 0, scale)
 
         super().__init__(position, sprite, get_random_velocity(1, 2))
-        self.direction = Vector2(self.UP_COORDS)
 
     # func that splits the asteroid when hit
     def split(self):

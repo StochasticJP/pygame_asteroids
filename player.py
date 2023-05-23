@@ -8,9 +8,10 @@ from player_weapons import Weapons
 class Player(GameObject):
     # class const
     SPACESHIP = "spaceship"
-    MANEAVERABILITY = 3  # how fast the spaceship rotates
-    UP_COORDS = (0, -1)
+    ROT_SPEED = 3  # how fast the spaceship rotates
     ACCELERATION = 0.25
+
+    # Weapon const
     BULLET_SPEED = 3
     LASER_SOUND = "laser"
 
@@ -22,11 +23,11 @@ class Player(GameObject):
 
     def rotate(self, clockwise=True):
         sign = 1 if clockwise else -1
-        angle = self.MANEAVERABILITY * sign
+        angle = self.ROT_SPEED * sign
         self.direction.rotate_ip(angle)
 
     def draw(self, surface):
-        angle = self.direction.angle_to(self.UP_COORDS)  # checks the difference between up and current direction
+        angle = self.direction.angle_to(GameObject.UP_DIRECTION)  # checks the difference between up and current direction
         rotated_surface = rotozoom(self.sprite, angle, 1.0)
         rotated_surface_size = Vector2(rotated_surface.get_size())
         blit_position = self.position - rotated_surface_size * 0.5

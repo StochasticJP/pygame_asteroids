@@ -7,6 +7,7 @@ import utils
 import random
 import time
 
+
 class Game:
     # class const
     SCREEN_WIDTH = 800
@@ -40,7 +41,6 @@ class Game:
 
             self.asteroids.append(Asteroids(position, self.asteroids.append))
 
-
     def main_loop(self):
         while True:
             self._handle_input()
@@ -73,7 +73,6 @@ class Game:
                 and event.key == pygame.K_SPACE
             ):
                 self.spaceship.shoot()
-
 
     def _process_game_logic(self):
         for game_object in self._get_game_objects():
