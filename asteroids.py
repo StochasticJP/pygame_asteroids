@@ -11,20 +11,37 @@ class Asteroids(GameObject):
     DIRECTION_NUMBER = 5
     UP_COORDS = (0, -1)
 
-    def __init__(self, position):
-        self.init_speed = [(round(random.uniform(-1.0, 1.0), 1), round(random.uniform(-1.0, 1.0), 1))
-                               for _ in range(self.DIRECTION_NUMBER)]
-        self.speed = Vector2(self.init_speed[random.randint(0, len(self.init_speed)-1)])
-        super().__init__(position, load_sprite(self.ASTEROIDS), get_random_velocity(1, 2))
+    def __init__(self, position, create_asteroid_callback, size=3):
+        self.size = size
+        self.create_asteroid_callback = create_asteroid_callback
+
+        size_to_scale = {
+            3: 1,
+            2: 0.5,
+            1: 0.25,
+        }
+
+        scale = size_to_scale[size]
+        sprite = rotozoom(load_sprite(self.ASTEROIDS), 0, scale)
+
+        super().__init__(position, sprite, get_random_velocity(1, 2))
         self.direction = Vector2(self.UP_COORDS)
 
-    def rotate(self):
-        self.direction.rotate_ip(self.CONST_ROTATION)
+    # func that splits the asteroid when hit
+    def split(self):
+        if self.size > 1:
+            for _ in range(2):
+                asteroid = Asteroids(self.position, self.create_asteroid_callback, self.size - 1)
+                self.create_asteroid_callback(asteroid)
 
-    def draw(self, surface):
-        angle = self.direction.angle_to(self.UP_COORDS)
-        rotated_surface = rotozoom(self.sprite, angle, 1.0)
-        rotated_surface_size = Vector2(rotated_surface.get_size())
-        blit_position = self.position
-        surface.blit(rotated_surface, blit_position)
+
+    # def rotate(self):
+    #     self.direction.rotate_ip(self.CONST_ROTATION)
+
+    # def draw(self, surface):
+    #     angle = self.direction.angle_to(self.UP_COORDS)
+    #     rotated_surface = rotozoom(self.sprite, angle, 1.0)
+    #     rotated_surface_size = Vector2(rotated_surface.get_size())
+    #     blit_position = self.position - rotated_surface_size * 0.5
+    #     surface.blit(rotated_surface, blit_position)
 

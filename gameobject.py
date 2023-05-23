@@ -23,6 +23,6 @@ class GameObject:
 
         # collision logic
         if distance < self.radius + other_obj.radius:
-            return "Collision occured"
+            return distance
 
 

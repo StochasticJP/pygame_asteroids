@@ -11,7 +11,7 @@ class Game:
     # class const
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 600
-    ASTEROIDS_NUMBER = 10
+    ASTEROIDS_NUMBER = 5
     MIN_ASTEROID_DISTANCE = 250
 
     def __init__(self):
@@ -19,6 +19,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.background = utils.load_sprite("space", False)
+        self.font = pygame.font.Font(None, 64)
+        self.message = ""
         self.asteroids = []
         self.bullets = []
         self.spaceship = Player((400, 300), self.bullets.append)
@@ -36,7 +38,7 @@ class Game:
                 if position.distance_to(self.spaceship.position) > self.MIN_ASTEROID_DISTANCE:
                     break
 
-            self.asteroids.append(Asteroids(position))
+            self.asteroids.append(Asteroids(position, self.asteroids.append))
 
 
     def main_loop(self):
@@ -81,11 +83,23 @@ class Game:
             for asteroid in self.asteroids:
                 if asteroid.collides_with(self.spaceship):
                     self.spaceship = None  # removes the spaceship
+                    self.message = "You Lost!"
+                    break
+
+        for bullet in self.bullets[:]:
+            for asteroid in self.asteroids[:]:
+                if bullet.collides_with(asteroid):
+                    self.bullets.remove(bullet)
+                    self.asteroids.remove(asteroid)
+                    asteroid.split()
                     break
 
         for bullet in self.bullets[:]:
             if not self.screen.get_rect().collidepoint(bullet.position):
                 self.bullets.remove(bullet)
+
+        if not self.asteroids and self.spaceship:
+            self.message = "You Won!"
 
         # self.spaceship.move(self.screen)
         #
@@ -105,6 +119,9 @@ class Game:
 
         for game_object in self._get_game_objects():
             game_object.draw(self.screen)
+
+        if self.message:
+            utils.print_text(self.screen, self.message, self.font)
 
         # self.spaceship.draw(self.screen)
         # # asteroid drawing

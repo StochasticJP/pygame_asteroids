@@ -12,11 +12,13 @@ class Player(GameObject):
     UP_COORDS = (0, -1)
     ACCELERATION = 0.25
     BULLET_SPEED = 3
+    LASER_SOUND = "laser"
 
     def __init__(self, position, create_bullet_callback):
         super().__init__(position, utils.load_sprite(self.SPACESHIP), Vector2(0))
         self.direction = Vector2(GameObject.UP_DIRECTION)
         self.create_bullet_callback = create_bullet_callback
+        self.laser_sound = utils.load_sound(self.LASER_SOUND)
 
     def rotate(self, clockwise=True):
         sign = 1 if clockwise else -1
@@ -37,3 +39,4 @@ class Player(GameObject):
         bullet_velocity = self.direction * self.BULLET_SPEED + self.velocity  # relative speed
         bullet = Weapons(self.position, bullet_velocity)
         self.create_bullet_callback(bullet)
+        self.laser_sound.play()
