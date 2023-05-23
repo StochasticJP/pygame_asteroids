@@ -15,7 +15,7 @@ class Asteroids(GameObject):
         self.init_speed = [(round(random.uniform(-1.0, 1.0), 1), round(random.uniform(-1.0, 1.0), 1))
                                for _ in range(self.DIRECTION_NUMBER)]
         self.speed = Vector2(self.init_speed[random.randint(0, len(self.init_speed)-1)])
-        super().__init__(position, load_sprite(self.ASTEROIDS), Vector2(self.speed))
+        super().__init__(position, load_sprite(self.ASTEROIDS), get_random_velocity(1, 2))
         self.direction = Vector2(self.UP_COORDS)
 
     def rotate(self):
