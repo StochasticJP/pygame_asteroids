@@ -27,8 +27,11 @@ class Player(GameObject):
         self.direction.rotate_ip(angle)
 
     def draw(self, surface):
+        # introduce rotozoom using given angle
         angle = self.direction.angle_to(GameObject.UP_DIRECTION)  # checks the difference between up and current direction
         rotated_surface = rotozoom(self.sprite, angle, 1.0)
+
+        # placement of sprite with blit
         rotated_surface_size = Vector2(rotated_surface.get_size())
         blit_position = self.position - rotated_surface_size * 0.5
         surface.blit(rotated_surface, blit_position)  # put on screen using blit_pos

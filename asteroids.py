@@ -7,11 +7,12 @@ import random
 
 class Asteroids(GameObject):
     ASTEROIDS = "asteroid"
-    CONST_ROTATION = 1
+    ROT_SPEED = -1
 
     def __init__(self, position, create_asteroid_callback, size=3):
         self.size = size
         self.create_asteroid_callback = create_asteroid_callback
+        self.angle = 0
 
         size_to_scale = {
             3: 1,
@@ -30,14 +31,10 @@ class Asteroids(GameObject):
                 asteroid = Asteroids(self.position, self.create_asteroid_callback, self.size - 1)
                 self.create_asteroid_callback(asteroid)
 
-
-    # def rotate(self):
-    #     self.direction.rotate_ip(self.CONST_ROTATION)
-
-    # def draw(self, surface):
-    #     angle = self.direction.angle_to(self.UP_COORDS)
-    #     rotated_surface = rotozoom(self.sprite, angle, 1.0)
-    #     rotated_surface_size = Vector2(rotated_surface.get_size())
-    #     blit_position = self.position - rotated_surface_size * 0.5
-    #     surface.blit(rotated_surface, blit_position)
-
+    # override inheritance draw for rotational movement
+    def draw(self, surface):
+        self.angle += self.ROT_SPEED
+        rotated_surface = rotozoom(self.sprite, self.angle, 1.0)
+        rotated_surface_size = Vector2(rotated_surface.get_size())
+        blit_position = self.position - rotated_surface_size * 0.5
+        surface.blit(rotated_surface, blit_position)

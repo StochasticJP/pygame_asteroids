@@ -105,8 +105,6 @@ class Game:
         # for asteroids in self.asteroids_list:
         #     asteroids.move(self.screen)
 
-
-
         # # Check screen boundaries to keep object within screen
         # if self.spaceship.position.x < 0 or self.spaceship.position.x > self.screen.get_width():
         #     self.spaceship.velocity.x *= -1
@@ -130,7 +128,6 @@ class Game:
 
         pygame.display.flip()  # updates the content of the screen
         self.clock.tick(60)  # will wait it match the desired FPS
-
 
     def _get_game_objects(self):
         game_objects = [*self.asteroids, *self.bullets]
